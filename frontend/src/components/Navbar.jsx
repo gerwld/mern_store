@@ -3,9 +3,11 @@ import React from 'react';
 import { CiSquareMinus, CiSquarePlus } from 'react-icons/ci';
 import { Link } from 'react-router';
 import { useTheme } from 'next-themes';
+import { useProductStore } from '../store/product';
 
 const Navbar = () => {
-    const { theme, setTheme } = useTheme();
+   const { theme, setTheme } = useTheme();
+   const { products } = useProductStore();
    return (
       <Container maxW={'1140px'} px={4}>
          <Flex
@@ -38,9 +40,11 @@ const Navbar = () => {
                {/* <Button onClick={toggleColorMode}>
                   <Icon as={colorMode === "light" ? CiSquarePlus : CiSquareMinus} boxSize={6} />
                </Button> */}
-               <Button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
-                    Switch to {theme === 'light' ? 'dark' : 'light'} mode
-                </Button>
+               <Button
+                  onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+               >
+                  Switch to {theme === 'light' ? 'dark' : 'light'} mode
+               </Button>
             </HStack>
          </Flex>
       </Container>
