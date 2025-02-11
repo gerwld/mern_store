@@ -1,5 +1,13 @@
-import { Box, Button, Container, Heading, Input, VStack } from '@chakra-ui/react';
+import {
+   Box,
+   Button,
+   Container,
+   Heading,
+   Input,
+   VStack,
+} from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { useProductStore } from '../store/product';
 
 const CreatePage = () => {
    const [newProduct, setNewProduct] = useState({
@@ -8,9 +16,12 @@ const CreatePage = () => {
       image: '',
    });
 
-   const handleAddProduct = () => {
-    alert(JSON.stringify(newProduct))
-   }
+   const { createProduct } = useProductStore();
+
+   const handleAddProduct = async () => {
+      const { success, message } = await createProduct(newProduct);
+      alert(success, message);
+   };
    return (
       <Container maxW={'container.sm'}>
          <VStack spacing={8}>
@@ -23,7 +34,15 @@ const CreatePage = () => {
                Create New Product
             </Heading>
 
-            <Box w={'full'} maxW={500} gap={"5"} p="4" spaceY={5} bg={'gray.900'} borderRadius={10}>
+            <Box
+               w={'full'}
+               maxW={500}
+               gap={'5'}
+               p='4'
+               spaceY={5}
+               bg={'gray.900'}
+               borderRadius={10}
+            >
                <Input
                   value={newProduct.name}
                   placeholder='Product Name'
@@ -49,7 +68,9 @@ const CreatePage = () => {
                   }}
                />
 
-               <Button w={'full'} onClick={handleAddProduct}>Add new Product</Button>
+               <Button w={'full'} onClick={handleAddProduct}>
+                  Add new Product
+               </Button>
             </Box>
          </VStack>
       </Container>
