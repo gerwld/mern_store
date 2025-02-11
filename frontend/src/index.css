@@ -1,0 +1,42 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+
+/* Light mode background */
+html {
+  --chakra-colors-background: #f7fafc;  /* Light background */
+  --chakra-colors-text: black;
+}
+
+/* Dark mode background */
+html.dark {
+  --chakra-colors-background: #07090b;  /* Dark background */
+  --chakra-colors-text: white;
+}
+
+/* Apply background color */
+body {
+  background-color: var(--chakra-colors-background);
+  color: var(--chakra-colors-text);
+}
