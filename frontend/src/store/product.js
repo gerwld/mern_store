@@ -16,7 +16,10 @@ export const useProductStore = create((set) => ({
         
     });
     const data = await res.json();
-    set((state)=> ({products: [...state.products, data.data]}))
-    return {success: true, message: "Profuct created successfully"};
+    if(data.success) {
+        set((state)=> ({products: [...state.products, data.data]}))
+        return {success: true, message: "Profuct created successfully"};
+    }
+    return {success: false, message: data.message};
    }
 }));

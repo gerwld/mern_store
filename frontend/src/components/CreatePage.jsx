@@ -20,7 +20,7 @@ const CreatePage = () => {
 
    const handleAddProduct = async () => {
       const { success, message } = await createProduct(newProduct);
-      alert(success, message);
+      alert(success + " " + message);
    };
    return (
       <Container maxW={'container.sm'}>
