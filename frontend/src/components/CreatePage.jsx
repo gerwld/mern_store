@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useProductStore } from '../store/product';
+import { Toaster, toaster } from './ui/toaster';
 
 const CreatePage = () => {
    const [newProduct, setNewProduct] = useState({
@@ -20,10 +21,17 @@ const CreatePage = () => {
 
    const handleAddProduct = async () => {
       const { success, message } = await createProduct(newProduct);
-      alert(success + " " + message);
+      console.log(message, success);
+
+      toaster.create({
+        title: message,
+        type: success ? "success" : "error",
+        duration: success ? 6000 : 3000
+      })
    };
    return (
       <Container maxW={'container.sm'}>
+        <Toaster/>
          <VStack spacing={8}>
             <Heading
                as={'h1'}
