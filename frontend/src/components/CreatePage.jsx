@@ -9,6 +9,7 @@ import {
 import React, { useState } from 'react';
 import { useProductStore } from '../store/product';
 import { Toaster, toaster } from './ui/toaster';
+import { useTheme } from 'next-themes';
 
 const CreatePage = () => {
    const [newProduct, setNewProduct] = useState({
@@ -18,6 +19,7 @@ const CreatePage = () => {
    });
 
    const { createProduct } = useProductStore();
+   const {theme} = useTheme();
 
    const handleAddProduct = async () => {
       const { success, message } = await createProduct(newProduct);
@@ -48,7 +50,7 @@ const CreatePage = () => {
                gap={'5'}
                p='4'
                spaceY={5}
-               bg={'gray.900'}
+               bg={theme === "light" ? "white" : 'gray.900'}
                borderRadius={10}
             >
                <Input

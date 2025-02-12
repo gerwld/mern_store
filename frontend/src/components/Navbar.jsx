@@ -3,7 +3,6 @@ import React from 'react';
 import { CiSquarePlus } from 'react-icons/ci';
 import { Link } from 'react-router';
 import { useTheme } from 'next-themes';
-import { useProductStore } from '../store/product';
 
 const Navbar = () => {
    const { theme, setTheme } = useTheme();

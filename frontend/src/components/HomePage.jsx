@@ -1,5 +1,5 @@
 import { Container, Heading, VStack, Text, SimpleGrid } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { useProductStore } from '../store/product';
 import { useEffect } from 'react';
@@ -7,10 +7,14 @@ import ProductCard from './ProductCard';
 
 const HomePage = () => {
    const { fetchProducts, products } = useProductStore();
+   const [sorted, setSorted] = useState([]);
    useEffect(() => {
       fetchProducts();
    }, [fetchProducts]);
 
+   useEffect(() => {
+      setSorted(products.sort((a, b) => b.createdAt.localeCompare(a.createdAt)));
+   }, [products])
 
    let content = (
       <Text fontSize='xl' textAlign='center' fontWeight='bold' color='gray.500'>
@@ -18,8 +22,8 @@ const HomePage = () => {
       </Text>
    );
 
-   if (products?.length)
-      content = products.map((item) => (
+   if (sorted?.length)
+      content = sorted.map((item) => (
          <ProductCard key={item._id} {...{ item }} />
       ));
 

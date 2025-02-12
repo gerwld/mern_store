@@ -3,6 +3,7 @@ import { create } from 'zustand';
 export const useProductStore = create((set) => ({
    products: [],
    setProducts: (products) => set({ products }),
+
    createProduct: async (newProduct) => {
     if(!newProduct.image || !newProduct.name || !newProduct.price) {
         return {success: false, message: "All fields are required"}
@@ -22,6 +23,7 @@ export const useProductStore = create((set) => ({
     }
     return {success: false, message: data.message};
    },
+
    fetchProducts: async () => {
     const res = await fetch("/api/products", {
         method: "GET",
@@ -29,19 +31,34 @@ export const useProductStore = create((set) => ({
     const data = await res.json();    
     if(data.success) {
         set(() => ({
-            products: data.data.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+            products: data.data
           }));
     }
    },
+
+   updateProduct: async (newProduct) => {
+    const res = await fetch(`/api/products/${newProduct._id}`, {
+        method:"PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newProduct)
+    })
+    // if not sucessful request:
+    const data = await res.json();
+    if(!data.success) return {success: false, message: data.message};
+
+    // if it was successful, then:
+    set(state => ({products: state.products.map(product => product._id !== newProduct._id ? product : newProduct)}))
+    return {success: true, message: data.message}
+   },
+
    deleteProduct: async (pid) => {
     const res = await fetch(`/api/products/${pid}`, {
         method: "DELETE",
     })
 
     const data = await res.json();
-    console.log(data);
-    
-
     if(!data.success) return {success: false, message: data.message} 
 
     set(state => ({products: state.products.filter(product => product._id !== pid)}))
