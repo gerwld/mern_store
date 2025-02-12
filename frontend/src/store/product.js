@@ -21,5 +21,31 @@ export const useProductStore = create((set) => ({
         return {success: true, message: "Profuct created successfully"};
     }
     return {success: false, message: data.message};
-   }
+   },
+   fetchProducts: async () => {
+    const res = await fetch("/api/products", {
+        method: "GET",
+    })
+    const data = await res.json();    
+    if(data.success) {
+        set(() => ({
+            products: data.data.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+          }));
+    }
+   },
+   deleteProduct: async (pid) => {
+    const res = await fetch(`/api/products/${pid}`, {
+        method: "DELETE",
+    })
+
+    const data = await res.json();
+    console.log(data);
+    
+
+    if(!data.success) return {success: false, message: data.message} 
+
+    set(state => ({products: state.products.filter(product => product._id !== pid)}))
+    return {success: true, message: data.message}
+   } 
+   
 }));
